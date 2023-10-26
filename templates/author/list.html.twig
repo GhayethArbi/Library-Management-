@@ -1,0 +1,46 @@
+<h1>List of Authors</h1>
+<table border=1>
+    <tr>
+        <td>id</td>
+        {#<td>picture</td>#}
+        <td>username</td>
+        <td>email</td>
+        <td>nb_books</td>
+        {#<td>Détails</td>#}
+        <td>Actions</td>
+    </tr>
+    {%set totalBooks=0%}
+    {%for a in authors %}
+    <tr>
+        <td>{{a.id}}</td>
+        {#<td><img src="{{a.picture }}" width="100"></td>#}
+        <td>{{a.username|upper}}</td>
+        <td>{{a.email}}</td>
+        <td>{{a.getNbBooks}}</td>
+        {#<td><a href="{{ path('showbyid', { 'id': a.id }) }}">Détails</a></td>#}
+        <td>
+            <a href="{{path('update_author', {'id': a.id})}}">Edit</a>
+            <a href="{{path('delete_author', {'id': a.id})}}">Delete</a>
+            <a href="{{path('show_author', {'id': a.id})}}">Show</a>
+        </td>
+    </tr>
+    {#%set totalBooks=totalBooks+a.nb_books%#}
+    {%endfor%}
+    {%if authors is empty%}
+        <tr><td colspan="7" align="center">No Authors Found</td></tr>
+    {%endif%}
+   {#<tr> 
+        <td colspan="5" container="center" style="text-align: center;">On a {{authors|length}} auteurs et {{totalBooks}} livres</td>
+    </tr>#}
+</table>
+<a href="{{ path('create_author') }}">Add new author</a><br>
+<a href="{{ path('list_books') }}">Go to books list</a><br>
+<a href="{{ path('delete_authors_with_no_boks') }}">Delete all authors with no books</a>
+{#<form>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>  
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="" required>
+    <br>
+    <button>save</button>#}

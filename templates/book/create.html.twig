@@ -1,0 +1,35 @@
+<table>
+    {{form_start(form)}}
+    <tr><th colspan="2" align="center"><h1>Add new book</h1></th></tr>
+    
+    <tr>
+        <td>{{form_label(form.ref,"Reference")}}</td>
+        <td>{{form_widget(form.ref)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.title,"Title")}}</td>
+        <td>{{form_widget(form.title)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.category,"Category")}}</td>
+        <td>{{form_widget(form.category)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.publicationDate,"Publication Date")}}</td>
+        <td>{{form_widget(form.publicationDate)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.published,"Published")}}</td>
+        <td>{{form_widget(form.published)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.author,"Author")}}</td>
+        <td>{{form_widget(form.author)}}</td>
+    </tr>
+    <tr>
+        <td><a href="{{path('list_books')}}">back to list</a></td>
+        <td>{{form_row(form.Save)}}</td>
+    </tr>
+    
+{{form(form)}}
+</table>

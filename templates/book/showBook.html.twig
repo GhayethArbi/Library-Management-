@@ -1,0 +1,28 @@
+<h1>Book</h1>
+<table>
+    <tr>
+        <td>Reference:</td>
+        <td>{{book.ref}}</td>
+    </tr>
+    <tr>
+        <td>Title of book:</td>
+        <td>{{book.title}}</td>
+    </tr>
+    <tr>
+        <td>Category:</td>
+        <td>{{book.category}}</td>
+    </tr>
+    <tr>
+        <td>Publication Date:</td>
+        <td>{{book.publicationDate|date}}</td>
+    </tr>
+    <tr>
+        <td>Published:</td>
+        <td>{{book.published}}</td>
+    </tr>
+    <tr>
+        <td>Author:</td>
+        <td>{{book.author.username}}</td>
+    </tr>
+</table>
+<a href="{{path('list_books')}}">Return</a>

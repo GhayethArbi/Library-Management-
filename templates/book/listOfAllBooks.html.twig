@@ -1,0 +1,40 @@
+<h1>List of All Books</h1>
+<table border=1>
+    <tr>
+        <td>Reference</td>
+        <td>Title</td>
+        <td>Category</td>
+        <td>Publication Date</td>
+        <td>Published</td>
+        <td>Author</td>
+        <td>Actions</td>
+    </tr>
+    {%for a in books %}
+    <tr>
+        <td>{{a.ref}}</td>
+        <td>{{a.title|upper}}</td>
+        <td>{{a.category}}</td>
+        <td>{{a.publicationDate|date}}</td>
+        <td>{{a.published}}</td>
+        <td>{{a.author.username}}</td>
+        <td>
+            <a href="{{path('update_book', {'ref': a.ref})}}">Edit</a>
+            <a href="{{path('delete_book', {'ref': a.ref})}}">Delete</a>
+            <a href="{{path('show_book', {'ref': a.ref})}}">Show</a>
+        </td>
+    </tr>
+
+    
+
+    {%endfor%}
+    {%if books is empty%}
+        <tr><td colspan="7" align="center">NoBooksFound</td></tr>
+    {%endif%}
+    
+</table>
+
+<p>Number of published books : {{nbBooksPublished}}</p>
+<p>Number of unpublished books : {{nbBooksNoPublished}}</p>
+<a href="{{ path('create_book') }}">Add new book</a><br>
+<a href="{{ path('list_authors') }}">Go to authors list</a><br>
+<a href="{{ path('list_books') }}">Go to published books list</a>

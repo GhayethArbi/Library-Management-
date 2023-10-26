@@ -1,0 +1,19 @@
+<table>
+    {{form_start(form)}}
+    <tr><th colspan="2" align="center"><h1>Add new author</h1></th></tr>
+    
+    <tr>
+        <td>{{form_label(form.username,"Username:")}}</td>
+        <td>{{form_widget(form.username)}}</td>
+    </tr>
+    <tr>
+        <td>{{form_label(form.email,"E-mail:")}}</td>
+        <td>{{form_widget(form.email)}}</td>
+    </tr>
+    <tr>
+        <td><a href="{{path('list_authors')}}">back to list</a></td>
+        <td>{{form_row(form.Save)}}</td>
+    </tr>
+    
+{{form(form)}}
+</table>
