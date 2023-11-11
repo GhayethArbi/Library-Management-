@@ -33,7 +33,7 @@ class BookType extends AbstractType
                 'class'=>Author::class,
                 'choice_label'=>'username',
                 'multiple'=>false,
-                'expanded'=>false,
+                'expanded'=>true,
             ])
             ->add('Save', SubmitType::class)
         ;

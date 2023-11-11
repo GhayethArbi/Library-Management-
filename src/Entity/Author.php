@@ -27,6 +27,8 @@ class Author
     #[ORM\Column]
     private ?int $nb_books = null;
 
+
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -102,4 +104,6 @@ class Author
 
         return $this;
     }
+
+    
 }

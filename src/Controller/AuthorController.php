@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Author;
 use App\Form\AuthorType;
+use App\Form\MinMaxBooksType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,14 +22,63 @@ class AuthorController extends AbstractController
             'controller_name' => 'AuthorController',
         ]);
     }
+
+    //Read
+    //show By id
+    #[Route('author/show/{id}', name: 'show_author')]
+    public function showAuthor($id, AuthorRepository $repo):Response
+    {
+        $author=$repo->find($id);
+        
+        return $this->render('author/show.html.twig', [
+           'author'=>$author ,
+        ]);
+    }
+    //shwo all authors ordred by email
+    #[Route('/authors_ordred', name: 'list_authors_byEmail')]
+    public function listOrdredByEmail(AuthorRepository $Repo, Request $request): Response
+    {
+        
+        $authors = $Repo->findAllOrdredByEmail();
+        $form=$this->createForm(MinMaxBooksType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $min=$form->get('minNumber')->getData();
+            $max=$form->get('maxNumber')->getData();
+            $authors=$Repo->findByNbreBooks($min,$max);
+        }
+        return $this->render('author/authorsOBE.html.twig', [
+            'authors' => $authors,
+            'form'=>$form->createView(),
+        ]);
+    }
+    //show all authors
     #[Route('/authors', name: 'list_authors')]
-    public function list(AuthorRepository $Repo): Response
+    public function list(AuthorRepository $Repo,Request $request): Response
     {
         $authors=$Repo->findAll();
+        $form=$this->createForm(MinMaxBooksType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $min=$form->get('minNumber')->getData();
+            $max=$form->get('maxNumber')->getData();
+            $authors=$Repo->findByNbreBooks($min,$max);
+        }
+        
+        
         return $this->render('author/list.html.twig', [
+           'form'=>$form->createView(),
             'authors' => $authors,
         ]);
     }
+    
+
+
+    //Create
     #[Route('/authors/create', name: 'create_author')]
     public function add(Request $request ,EntityManagerInterface $em): Response
     {
@@ -50,6 +100,8 @@ class AuthorController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    //Update
     #[Route('authors/update/{id}', name: 'update_author')]
     public function update(Request $request ,AuthorRepository $repo,$id,EntityManagerInterface $em): Response
     {
@@ -67,6 +119,10 @@ class AuthorController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    //Delete
+    //Delete by id
     #[Route('author/delete/{id}', name: 'delete_author')]
     public function delete(AuthorRepository $repo,$id,EntityManagerInterface $em): RedirectResponse
     {
@@ -76,23 +132,17 @@ class AuthorController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('list_authors');
     }
-    #[Route('authors/delete/no_books',name: 'delete_authors_with_no_boks')]
+    //Delete All with no books
+    #[Route('authors/delete/no_books',name: 'delete_authors_with_no_books')]
     public function deleteAuthorsWithNoBooks(AuthorRepository $repo,EntityManagerInterface $em): RedirectResponse
     {
-        $authors = $repo->findBy(['nb_books'=> 0]);
+        /*$authors = $repo->findBy(['nb_books'=> 0]);
         foreach($authors as $author){
-        $em->remove($author);
-    }
-        $em->flush();
+            $em->remove($author);
+            $em->flush();
+        }*/
+        $repo->deleteAuthorsWithZerosNbBooks();
         return $this->redirectToRoute('list_authors');
     }
-    #[Route('author/show/{id}', name: 'show_author')]
-    public function showAuthor($id, AuthorRepository $repo):Response
-    {
-        $author=$repo->find($id);
-        
-        return $this->render('author/show.html.twig', [
-           'author'=>$author ,
-        ]);
-    }
+    
 }

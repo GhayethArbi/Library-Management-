@@ -1,4 +1,26 @@
+
 <h1>List of Published Books</h1>
+<table>
+    {{form_start(form)}}
+    <tr>
+        <td>{{form_label(form.ref,"Reference :")}}</td>
+        <td>{{form_widget(form.ref)}}</td>
+        <td>{{form_row(form.search)}}</td>
+    </tr>
+
+    {{form(form)}}
+    {{form_start(form2)}}
+    <tr>
+        <td>{{form_label(form2.publicationDate,"publication Date :")}}</td>
+        <td>{{form_widget(form2.publicationDate)}}</td>
+        <td>{{form_label(form2.nbreOfBooks,"Min number of books by author :")}}</td>
+        <td>{{form_widget(form2.nbreOfBooks)}}</td>
+        <td>{{form_row(form2.search)}}</td>
+    </tr>
+
+    {{form(form2)}}
+</table>
+
 <table border=1>
     <tr>
         <td>Reference</td>
@@ -20,7 +42,7 @@
         <td>
             <a href="{{path('update_book', {'ref': a.ref})}}">Edit</a>
             <a href="{{path('delete_book', {'ref': a.ref})}}">Delete</a>
-            <a href="{{path('show_book', {'ref': a.ref})}}">Show</a>
+            <a href="{{path('books_by_ref', {'ref': a.ref})}}">Show</a>
         </td>
     </tr>
 
@@ -37,4 +59,5 @@
 <p>Number of unpublished books : {{nbBooksNoPublished}}</p>
 <a href="{{ path('create_book') }}">Add new book</a><br>
 <a href="{{ path('list_authors') }}">Go to authors list</a><br> 
-<a href="{{ path('all_list_books') }}">Go to all books list</a>
+<a href="{{ path('all_books') }}">Go to all books list</a>
+</div>
