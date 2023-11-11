@@ -286,7 +286,7 @@ class BookController extends AbstractController
     #[Route('books/update_william', name: 'update_book_william')]
     public function updateWilliamCategory(BookRepository $repo, EntityManagerInterface $em): Response
     {
-        $query=$repo->updateCategoryForWilliamShakespear("aziz","romance");
+        $query=$repo->updateCategoryForWilliamShakespear("William Shakespear","romance");
         $query->execute();
         $em->flush();
         return $this->redirectToRoute('all_books');
